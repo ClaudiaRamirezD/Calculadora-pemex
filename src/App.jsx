@@ -18,6 +18,13 @@ function App() {
       setResultado("Completa todos los campos correctamente");
       return;
     }
+
+    if (cap <= 0 || act < 0 || porc <= 0 || porc > 100) {
+      setResultado(
+        "Los valores deben ser positivos y el porcentaje entre 1 y 100"
+      );
+      return;
+    }
   
     const litrosDeseados = (cap * porc) / 100;
     const litrosFaltantes = litrosDeseados - act;
