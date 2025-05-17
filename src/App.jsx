@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { calcularLitros } from './utils/calcularLitros'
 import InputField from './components/InputField';
 import Result from './components/Result';
 import './App.css';
@@ -9,35 +10,9 @@ function App() {
   const [porcentaje, setPorcentaje] = useState("");
   const [resultado, setResultado] = useState(null);
 
-  const calcularLitros = () => {
-    const cap = parseFloat(capacidad) * 1000;
-    const act = parseFloat(actual);
-    const porc = parseFloat(porcentaje);
-
-    if (isNaN(cap) || isNaN(act) || isNaN(porc)) {
-      setResultado("Completa todos los campos correctamente");
-      return;
-    }
-
-    if (cap <= 0 || act < 0 || porc <= 0 || porc > 100) {
-      setResultado(
-        "Los valores deben ser positivos y el porcentaje entre 1 y 100"
-      );
-      return;
-    }
-  
-    const litrosDeseados = (cap * porc) / 100;
-    const litrosFaltantes = litrosDeseados - act;
-
-    if (litrosFaltantes < 0) {
-      const exceso = Math.abs(litrosFaltantes);
-      setResultado(`Se pasa de la capacidad por ${exceso.toFixed(2)} litros`);
-    } else if (litrosFaltantes === 0) {
-      setResultado("El tanque ya está en el porcentaje deseado");
-    } else {
-      setResultado(`Debes cargar ${litrosFaltantes.toFixed(2)} litros`);
-    }
-
+  const calcular = () => {
+    const mensaje = calcularLitros(capacidad, actual, porcentaje);
+    setResultado(mensaje);
   };
 
   const limpiar = () => {
@@ -77,7 +52,7 @@ function App() {
 
         <div className="flex justify-between pt-2">
           <button
-            onClick={calcularLitros}
+            onClick={calcular}
             className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-md transition"
           >
             Calcular
@@ -92,6 +67,8 @@ function App() {
       </section>
     </main>
   );
+
 }
+
 
 export default App;

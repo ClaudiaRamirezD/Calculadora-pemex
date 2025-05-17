@@ -1,40 +1,33 @@
 function Result({ resultado }) {
     if (!resultado) return null;
 
-    const matchCargar = resultado.match(/Debes cargar (\d+(\.\d+)?) litros/);
-    const matchMaximo = resultado.match(
-        /Lo más que podrías son: (\d+(\.\d+)?) litros/
-    );
+    if (resultado.tipo === "error" || resultado.tipo === "ok") {
+        return <p>{resultado.mensaje}</p>;
+    }
 
-    if (matchCargar) {
-        const litros = matchCargar[1];
+    if (resultado.tipo === "exceso") {
         return (
-        <p className="text-white font-semibold text-center text-xl">
-            Debes cargar{" "}
-            <span className="text-green-400">
-            {Number(litros).toLocaleString()}
-            </span>{" "}
-            litros
-        </p>
+            <p>
+                Se pasa de la capacidad por{" "}
+                <span className="text-red-500 font-semibold">
+                    {Number(resultado.valor).toLocaleString()} litros
+                </span>
+            </p>
         );
     }
 
-    if (matchMaximo) {
-        const litros = matchMaximo[1];
+    if (resultado.tipo === "carga") {
         return (
-        <p className="text-white font-semibold text-center text-xl">
-            Lo más que podrías son:{" "}
-            <span className="text-green-400">
-            {Number(litros).toLocaleString()}
-            </span>{" "}
-            litros
-        </p>
+            <p>
+                Debes cargar{" "}
+                <span className="text-green-400 font-semibold">
+                    {Number(resultado.valor).toLocaleString()} litros
+                </span>
+            </p>
         );
     }
 
-    return (
-        <p className="text-white font-semibold text-center text-xl">{resultado}</p>
-    );
+    return null;
 }
 
 export default Result;
