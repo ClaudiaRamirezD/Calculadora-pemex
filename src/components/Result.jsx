@@ -7,23 +7,23 @@ function Result({ resultado }) {
 
     if (resultado.tipo === "exceso") {
         return (
-            <p>
-                Se pasa de la capacidad por{" "}
-                <span className="text-red-500 font-semibold">
-                    {Number(resultado.valor).toLocaleString()} litros
-                </span>
-            </p>
+        <p>
+            Se pasa de la capacidad por{" "}
+            <span className="text-red-500 font-semibold">
+            {Number(resultado.valor).toLocaleString("en-US")} litros
+            </span>
+        </p>
         );
     }
 
     if (resultado.tipo === "carga") {
         return (
-            <p>
-                Debes cargar{" "}
-                <span className="text-green-400 font-semibold">
-                    {Number(resultado.valor).toLocaleString()} litros
-                </span>
-            </p>
+        <p>
+            Debes cargar{" "}
+            <span className="text-green-400 font-semibold">
+            {Number(resultado.valor).toLocaleString("en-US")} litros
+            </span>
+        </p>
         );
     }
 
